@@ -35,7 +35,7 @@ const run = async () => {
 
         console.log('Connected to MongoDB');
     }
-    
+
     finally {
         // Ensures that the client will close when you finish/error
         //   await client.close();
@@ -89,20 +89,6 @@ app.post('/users', async (req, res) => {
         res.json({ message: 'Failed to save user', error: error.message });
     }
 });
-
-// // Get User Info by Email
-// app.get('/users/:email', async (req, res) => {
-//     const email = req.params.email;
-//     try {
-//         const user = await usersCollection.findOne({ email });
-//         if (!user) {
-//             return res.json({ message: 'User not found' });
-//         }
-//         res.json(user);
-//     } catch (error) {
-//         res.json({ message: 'Failed to fetch user', error: error.message });
-//     }
-// });
 
 // Create New Campaign
 app.post('/campaigns', async (req, res) => {
