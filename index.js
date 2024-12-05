@@ -54,12 +54,8 @@ app.get('/', (req, res) => {
 // Donation-collection
 app.post('/donations', async (req, res) => {
     const donation = req.body;
-    try {
-        const result = await donationsCollection.insertOne(donation);
-        res.json({ message: 'Donation saved successfully!', result });
-    } catch (error) {
-        res.json({ error: 'Failed to save donation data.' });
-    }
+    const result = await donationsCollection.insertOne(donation);
+    res.send(result);
 });
 
 // Get All Donations
@@ -83,7 +79,7 @@ app.post('/users', async (req, res) => {
         if (existingUser) {
             return res.json({ message: 'User already exists' });
         }
-        const result = await usersCollection.insertOne(user);
+        const result = await usersCollection.insertOne(newUser);
         res.json(result);
     } catch (error) {
         res.json({ message: 'Failed to save user', error: error.message });
@@ -124,38 +120,6 @@ app.get('/campaigns/:id', async (req, res) => {
         res.json({ message: 'Failed to fetch campaign', error: error.message });
     }
 });
-
-// // Update Campaign
-// app.put('/campaigns/:id', async (req, res) => {
-//     const id = req.params.id;
-//     const updatedData = req.body;
-//     try {
-//         const result = await campaignsCollection.updateOne(
-//             { _id: new ObjectId(id) },
-//             { $set: updatedData }
-//         );
-//         if (result.matchedCount === 0) {
-//             return res.json({ message: 'Campaign not found' });
-//         }
-//         res.json(result);
-//     } catch (error) {
-//         res.json({ message: 'Failed to update campaign', error: error.message });
-//     }
-// });
-
-// // Delete Campaign
-// app.delete('/campaigns/:id', async (req, res) => {
-//     const id = req.params.id;
-//     try {
-//         const result = await campaignsCollection.deleteOne({ _id: new ObjectId(id) });
-//         if (result.deletedCount === 0) {
-//             return res.json({ message: 'Campaign not found' });
-//         }
-//         res.json(result);
-//     } catch (error) {
-//         res.json({ message: 'Failed to delete campaign', error: error.message });
-//     }
-// });
 
 // Start Server
 app.listen(port, () => {
