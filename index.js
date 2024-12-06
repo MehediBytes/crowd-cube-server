@@ -121,6 +121,14 @@ app.get('/campaigns/:id', async (req, res) => {
     }
 });
 
+// Delete a Campaign from database
+app.delete('/campaigns/:id', async (req, res) => {
+    const id = req.params.id;
+    const query = { _id: new ObjectId(id) }
+    const result = await campaignsCollection.deleteOne(query);
+    res.send(result);
+})
+
 // Start Server
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
