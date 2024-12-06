@@ -129,6 +129,19 @@ app.delete('/campaigns/:id', async (req, res) => {
     res.send(result);
 })
 
+// Update a campaign on database
+app.put('/campaigns/:id', async(req, res) => {
+    const id = req.params.id;
+    const filter = { _id: new ObjectId(id) };
+    const options = { upsert: true};
+    const updateDoc = {
+        $set: req.body
+    }
+
+    const result = await campaignsCollection.updateOne(filter, updateDoc, options);
+    res.send(result);
+})
+
 // Start Server
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
