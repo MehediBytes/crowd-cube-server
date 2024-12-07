@@ -21,7 +21,6 @@ const client = new MongoClient(uri, {
     }
 });
 
-// let usersCollection, campaignsCollection, donationsCollection;
 
 const run = async () => {
     try {
