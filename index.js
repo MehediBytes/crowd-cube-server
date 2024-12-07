@@ -14,8 +14,6 @@ app.use(express.json());
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.lzi65.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 const client = new MongoClient(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
     serverApi: {
         version: ServerApiVersion.v1,
         strict: true,
@@ -23,12 +21,14 @@ const client = new MongoClient(uri, {
     }
 });
 
-let usersCollection, campaignsCollection, donationsCollection;
+// let usersCollection, campaignsCollection, donationsCollection;
 
 const run = async () => {
     try {
-        await client.connect();
+        // await client.connect();
+
         const database = client.db('campaignDB');
+
         usersCollection = database.collection('users');
         campaignsCollection = database.collection('campaigns');
         donationsCollection = database.collection('donations');
@@ -75,6 +75,7 @@ const run = async () => {
             res.send(result);
         })
 
+
         // Save User to Database (Register)
         app.get('/users', async (req, res) => {
             const cursor = usersCollection.find();
@@ -87,6 +88,7 @@ const run = async () => {
             const result = await usersCollection.insertOne(newUser);
             res.send(result);
         });
+
 
         // Donation-collection
         app.post('/donations', async (req, res) => {
@@ -109,8 +111,6 @@ const run = async () => {
 };
 
 run().catch(console.dir);
-
-// Routes
 
 // Home Route
 app.get('/', (req, res) => {
